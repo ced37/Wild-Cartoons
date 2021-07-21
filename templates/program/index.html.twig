@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Program index{% endblock %}
+
+{% block body %}
+    <h1>Liste de tout les cartoons</h1>
+        <div class="cartoons-list">
+        {% for program in programs %}
+            
+                <h2>{{ program.title }}</h2>
+                <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
+                <p>{{ program.summary }}</p>
+                
+                
+                    <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
+                    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+        {% endfor %}
+        </div>
+    <a href="{{ path('episode_index') }}">Voir la liste des épisodes</a>
+    <a href="{{ path('program_new') }}">Create new</a>
+{% endblock %}

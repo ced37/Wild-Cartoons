@@ -33,7 +33,7 @@ class Episode
     private $synopsis;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Program::class)
+     * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="episodes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $program;
