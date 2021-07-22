@@ -19,11 +19,17 @@
     </head>
     <header>
         <div class="header-logo"><a href="{{ path('home') }}">Wild Cartoons</a></div>
-        <nav>
-                <p class="cartoons"><a href="{{ path('program_index') }}">Cartoons</a><p>
-        </nav>
+            <nav>
+                    <p class="cartoons"><a href="{{ path('program_index') }}">Cartoons</a><p>
+            </nav>
+        </div>
         <div class="header-form-links">
-            <p><a href="#">Connection</a></p>
+            <p><a href="/login">Connection</a></p>
+        </div>
+        <div class="header-form-links-deco">
+        {% if app.user %}
+    		<p><a id="logout-link" href="{{ path('app_logout') }}"> Se déconnecter</a></p>
+		{% endif %}
         </div>
     </header>
     <body>
