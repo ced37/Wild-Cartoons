@@ -65,7 +65,7 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a episode by id
-     * @Route("/{programId}/episodes/{episodeId}", name="episode_show")
+     * @Route("/{programId}/episode/{episodeId}", name="episode_show")
      * @return Response
      */
     public function showEpisode(Program $programId, Episode $episodeId): Response
@@ -80,7 +80,7 @@ class ProgramController extends AbstractController
 
         return $this->render('episode/show.html.twig', [
             'program' => $program,
-            'episodes' => $episode
+            'episode' => $episode
         ]);
     }
 
