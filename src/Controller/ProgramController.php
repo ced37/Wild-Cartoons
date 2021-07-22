@@ -2,21 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Form\ProgramType;
+use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/program")
+ * @Route("/program", name="program_")
  */
 class ProgramController extends AbstractController
 {
     /**
-     * @Route("/", name="program_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(ProgramRepository $programRepository): Response
     {
@@ -26,7 +28,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="program_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,17 +51,39 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="program_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
-    public function show(Program $program): Response
+    public function show(Program $program, EpisodeRepository $episodeRepository): Response
     {
+        $episodes = $episodeRepository->findBy(['program' => $program]);
         return $this->render('program/show.html.twig', [
-            'program' => $program,
+            'program' => $program, 'episodes' => $episodes
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="program_edit", methods={"GET","POST"})
+     * Getting a episode by id
+     * @Route("/{programId}/episodes/{episodeId}", name="episode_show")
+     * @return Response
+     */
+    public function showEpisode(Program $programId, Episode $episodeId): Response
+    {
+        $program = $this->getDoctrine()
+        ->getRepository(Program::class)
+        ->find($programId);
+
+        $episode = $this->getDoctrine()
+        ->getRepository(Episode::class)
+        ->find($episodeId);
+
+        return $this->render('episode/show.html.twig', [
+            'program' => $program,
+            'episodes' => $episode
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Program $program): Response
     {
@@ -79,7 +103,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="program_delete", methods={"POST"})
+     * @Route("/{id}", name="delete", methods={"POST"})
      */
     public function delete(Request $request, Program $program): Response
     {

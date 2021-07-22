@@ -1,34 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Program{% endblock %}
-
 {% block body %}
-    <h1>Program</h1>
+  <div class="detailCartoon">
+            <h2>{{ program.title }}</h2>
+            
+            <h3>Résumé</h3>
+            <p class="summary">{{ program.summary }}</p>
+            
+            <h3>Affiche</h3>
+            <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
+    <h3>Episodes</h3>
+    <ul>
+  {% for episode in episodes %}
+    <a href="{{ path('program_episode_show', {programId: program.id, episodeId: episode.id}) }}"><li>épisode {{ episode.number }}</li></a>
+  {% endfor %}
+    </ul>
+    <div>
+      <a href="{{ path('episode_new') }}"><input type ="submit" value="Ajouter un nouvel épisode"></a>
+    </div>
+    <div class="backToList">
+        <a href="{{ path('program_index') }}">revenir à la liste</a>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ program.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ program.title }}</td>
-            </tr>
-            <tr>
-                <th>Summary</th>
-                <td>{{ program.summary }}</td>
-            </tr>
-            <tr>
-                <th>Poster</th>
-                <td>{{ program.poster }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('program_index') }}">back to list</a>
-
-    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+    <a href="{{ path('program_edit', {'id': program.id}) }}"><input type ="submit" value="Modifier le cartoon"></a>
 
     {{ include('program/_delete_form.html.twig') }}
+  </div>
 {% endblock %}

@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('episode_index') }}">back to list</a>
+    <a href="{{ path('episode_index') }}">revenir à la liste</a>
 
-    <a href="{{ path('episode_edit', {'id': episode.id}) }}">edit</a>
+    <a href="{{ path('episode_edit', {'id': episode.id}) }}">modifier</a>
 
     {{ include('episode/_delete_form.html.twig') }}
 {% endblock %}
